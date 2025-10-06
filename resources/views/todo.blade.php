@@ -12,7 +12,6 @@
     <form method="POST">
         Uppgift: <input name="uppgift" placeholder="Skriv in en uppgift" required autocomplete="off">
         <input type="submit" value="Lägg till">
-        <input type="hidden" name="lista" value="{{json_encode($lista)}}">
     </form>
     @if (empty($lista))
     <p>Det finns inget att göra!!!</p>
@@ -22,11 +21,10 @@
         @foreach($lista as $uppgift)
         <li>
             <form method="POST">
-                <input type="hidden" name="lista" value="{{json_encode($lista)}}">
-                {{$uppgift}}
-                <input type="hidden" name="uppgift" value="{{$uppgift}}">
+                {{$uppgift->id}} {{$uppgift->text}}
+                <input type="hidden" name="uppgift" value="{{$uppgift->id}}">
                 <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" value="Ta bort">
+                <input type="submit" value="Ta bort">
             </form>
         </li>
         @endforeach
