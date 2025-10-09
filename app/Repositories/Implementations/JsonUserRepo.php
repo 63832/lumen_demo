@@ -25,7 +25,7 @@ class JsonUserRepo implements UserRepo {
     }
 
     public function get(string $id):?user {
-        return isset($this->data['$id']) ? $this->data[$id] : null;
+        return isset($this->data[$id]) ? $this->data[$id] : null;
     }
 
     public function add(User $user):void {
