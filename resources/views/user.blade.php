@@ -29,6 +29,10 @@
             <input type="email" name="epost" required placeholder="Ange epost" value="{{$user->epost ?? ''}}">
         </label>
 
+        <label>Lösenord:
+            <input type="password" name="losenord" placeholder="Ange lösenord">
+        </label>
+
         <input type="submit" value="Spara">
         <input type="reset" value="Ångra">
         @if(isset($user))
