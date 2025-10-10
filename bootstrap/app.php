@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -61,6 +61,8 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('view');
+$app->configure('session');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +75,10 @@ $app->configure('view');
 |
 */
 
-$app->middleware([App\Http\Middleware\LowerCaseUrls::class]);
+$app->middleware([
+    App\Http\Middleware\LowerCaseUrls::class,
+    Illuminate\Session\Middleware\StartSession::class
+]);
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
@@ -111,7 +116,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 return $app;
