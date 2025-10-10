@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use PHPUnit\TextUI\XmlConfiguration\Group;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -29,10 +31,12 @@ $router->delete('/todo', 'TodoController@remove');
 $router->put('/todo', 'TodoController@update');
 
 // Användare 
-$router->get('/anvandare', 'UserController@show');
-$router->get('/anvandare/{id}', 'UserController@showUser');
-$router->post('/anvandare/{id}', 'UserController@modifyUser');
-$router->post('/anvandare', 'UserController@add');
+$router->group(['middleware'=>'auth.user'], function() use  ($router) {
+    $router->get('/anvandare', 'UserController@show');
+    $router->get('/anvandare/{id}', 'UserController@showUser');
+    $router->post('/anvandare/{id}', 'UserController@modifyUser');
+    $router->post('/anvandare', 'UserController@add');
+});
 
 // Inloggning
 $router->get('/login', 'LoginController@show');
