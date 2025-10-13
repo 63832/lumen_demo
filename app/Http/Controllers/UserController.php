@@ -24,10 +24,19 @@ class UserController extends Controller
     }
 
     public function showUser(Request $request)
+
+    // Hämta inloggad användare 
     {
         $id = $request->route('id');
         $user = $this->repo->get($id);
-        return View::make('user', ['user' => $user]);
+
+        $me = $request->user();
+        if($me->admin || isset($user) && $me->id == $user->id) {
+            return View::make('user', ['user' => $user, 'me' => $me]);
+        } else {
+            // Aja baja
+            return View::make('ajabaja');
+        } 
     }
 
     function add(Request $request)
