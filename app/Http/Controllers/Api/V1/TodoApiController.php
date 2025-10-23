@@ -23,30 +23,41 @@ class TodoApiController extends Controller
 
     public function get(Request $request)
     {
-        $item = $this->repo->get($request->route('id'));
-        return response()->json(['todo' => $item]);
+        try {
+            $id = filter_var($request->route('id'), FILTER_VALIDATE_INT);
+            $item = $this->repo->get($request->route('id'));
+            return response()->json(['todo' => $item]);
+        } catch(\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 
     public function add(Request $request)
     {
+        try {
+            $text = $request->input('uppgift');
+            $uppgift = Uppgift::factory()->make(['text' => $text, 'done' => false]);
 
-        $text = $request->input('uppgift');
-        $uppgift = Uppgift::factory()->make(['text' => $text, 'done' => false]);
-
-        $this->repo->add($uppgift);
-        return response()->json($uppgift, 201);
+            $this->repo->add($uppgift);
+            return response()->json($uppgift, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 
     public function update(Request $request)
-    {
-        $id = filter_var($request->input('id'), FILTER_VALIDATE_INT);
-        $uppgift = $this->repo->get($id);
-        $uppgift->text = $request->input('uppgift');
-        $uppgift->done = $request->input('done', $uppgift->done);
+    { try {
+        try {
+            $id = filter_var($request->input('id'), FILTER_VALIDATE_INT);
+            $uppgift = $this->repo->get($id);
+            $uppgift->text = $request->input('uppgift');
+            $uppgift->done = $request->input('done', $uppgift->done);
 
         $this->repo->update($uppgift);
 
         return response()->json(['todo' => $uppgift]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 401);
     }
    public function check(Request $request) {
         $id = filter_var($request->route('id'), FILTER_VALIDATE_INT);
@@ -59,10 +70,14 @@ class TodoApiController extends Controller
     }
 
     public function remove(Request $request) {
+        try {
         $id = filter_var($request->input('id'), FILTER_VALIDATE_INT);
 
         $this->repo->delete($id);
 
-        return response()->json(null, 204);
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 }
