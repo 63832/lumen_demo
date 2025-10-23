@@ -12,3 +12,4 @@ $router->post('/todo', 'TodoApiController@add');
 $router->put('/todo/{id}', 'TodoApiController@update');
 $router->patch('/todo/{id}', 'TodoApiController@check');
 $router->delete('/todo', 'TodoApiController@remove');
+$router->delete('/todo/{id}', 'TodoApiController@remove');

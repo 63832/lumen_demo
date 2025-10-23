@@ -48,11 +48,21 @@ class TodoApiController extends Controller
 
         return response()->json(['todo' => $uppgift]);
     }
+   public function check(Request $request) {
+        $id = filter_var($request->route('id'), FILTER_VALIDATE_INT);
+        $uppgift = $this->repo->get($id);
+        $uppgift->done = !$uppgift->done;
 
-    public function remove(Request $request)
-    {
-        $text = $request->input('uppgift');
-        $this->repo->delete($text);
-        return response()->json(['todo' => $this]);
+        $this->repo->update($uppgift);
+
+        return response()->json(['todo' => $uppgift]);
+    }
+
+    public function remove(Request $request) {
+        $id = filter_var($request->input('id'), FILTER_VALIDATE_INT);
+
+        $this->repo->delete($id);
+
+        return response()->json(null, 204);
     }
 }
