@@ -42,4 +42,6 @@ interface UserRepo
 
     //Returnerar en användare baserat på epost
     public function getUserByEmail(string $email): ?User;
+
+    public function findUserByRefreshToken(string $token): ?User;
 }
