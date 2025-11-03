@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Login;
+use App\Models\User;
 use App\services\AuthenticationService;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
