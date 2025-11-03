@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class JwtService {
     protected string $secret;
@@ -37,7 +38,7 @@ class JwtService {
     public function decodeAccessToken(string $token) {
         try {
             JWT::$leeway=60;
-            return JWT::decode($token, new Key($this->secret,'HS265'));
+            return JWT::decode($token, new Key($this->secret,'HS256'));
         } catch (\Exception $e) {
             return null;
         }
