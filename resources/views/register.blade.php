@@ -13,14 +13,13 @@
          .error {
             background-color: pink;
             color: darkred;
-            width: 12%;
             text-align: center;
         }
     </style>
 </head>
 
 <body>
-    @if($meddelande)
+    @if(isset($meddelande))
     <p class="error">{{$meddelande}}</p>
     @endif
     <h1>Registrera ny användare</h1>
